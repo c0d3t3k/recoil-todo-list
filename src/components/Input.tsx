@@ -5,8 +5,12 @@ import {
     TextStyle as TaskTextStyle,
     taskState,
 } from './Task'
-import {useRecoilCallback, useRecoilValue} from 'recoil'
-import {tasksState} from './Tasks'
+//import {useRecoilCallback, useRecoilValue} from 'recoil'
+//import {tasksState} from './Tasks'
+
+import { useAtom, atom } from 'jotai'
+import { atomFamily } from 'jotai/utils'
+import { tasksAtom } from './Tasks'
 
 const InsertInput = styled.input`
     width: 100%;
@@ -26,18 +30,30 @@ const InsertInput = styled.input`
 
 export const Input: React.FC = () => {
     const [label, setLabel] = useState('')
-    const tasks = useRecoilValue(tasksState)
+    //const tasks = useRecoilValue(tasksState)
+    const [tasks, setTasks] = useAtom(tasksAtom)
 
-    const insertTask = useRecoilCallback(({set}) => {
-        return (label: string) => {
-            const newTaskId = tasks.length
-            set(tasksState, [...tasks, newTaskId])
-            set(taskState(newTaskId), {
-                label: label,
-                complete: false,
-            })
-        }
-    })
+    // const insertTask = useRecoilCallback(({set}) => {
+    //     return (label: string) => {
+    //         const newTaskId = tasks.length
+    //         set(tasksState, [...tasks, newTaskId])
+    //         set(taskState(newTaskId), {
+    //             label: label,
+    //             complete: false,
+    //         })
+    //     }
+    // })
+
+    const insertTask = (label: string) => {
+        // const newTaskId = tasks.length
+        setTasks([
+            ...tasks,
+            {
+                label,
+                complete: false
+            }
+        ])
+    }
 
     return (
         <TaskContainer>

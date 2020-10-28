@@ -1,13 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import {RecoilRoot} from 'recoil'
+import { Provider } from 'jotai'
+//import {RecoilRoot} from 'recoil'
 
 ReactDOM.render(
     <React.StrictMode>
-        <RecoilRoot>
+        {/* <RecoilRoot> */}
+        <Provider>
             <App />
-        </RecoilRoot>
+        </Provider>
+        {/* </RecoilRoot> */}
     </React.StrictMode>,
     document.getElementById('root'),
 )

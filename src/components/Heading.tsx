@@ -15,7 +15,7 @@ export const Heading: React.FC = () => {
             <span role="img" aria-label="Taskhero logo">
                 🦸‍♂️
             </span>{' '}
-            Taskhero
+            Jotai Taskhero
         </Container>
     )
 }

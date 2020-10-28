@@ -1,9 +1,12 @@
+import * as _ from 'lodash';
+
 import React from 'react'
-import {Card} from './Card'
+import { Card } from './Card'
 import styled from 'styled-components'
-import {selector, useRecoilValue} from 'recoil'
-import {tasksState} from './Tasks'
-import {taskState} from './Task'
+//import {selector, useRecoilValue} from 'recoil'
+import { useAtom, atom } from 'jotai'
+import { Task, tasksAtom } from './Tasks'
+import { taskState } from './Task'
 
 const StatContainer = styled.div`
     flex: 1;
@@ -24,7 +27,7 @@ const StatLabel = styled.div`
     text-transform: uppercase;
 `
 
-const Stat: React.FC<{label: string; value: string | number}> = ({
+const Stat: React.FC<{ label: string; value: string | number }> = ({
     label,
     value,
 }) => {
@@ -49,37 +52,63 @@ const Container = styled(Card)`
     margin-bottom: 20px;
 `
 
-const tasksCompleteState = selector({
-    key: 'tasksComplete',
-    get: ({get}) => {
-        const taskIds = get(tasksState)
-        const tasks = taskIds.map((id) => {
-            return get(taskState(id))
-        })
-        return tasks.filter((task) => task.complete).length
-    },
-})
+// const tasksCompleteState = selector({
+//     key: 'tasksComplete',
+//     get: ({get}) => {
+//         const taskIds = get(tasksState)
+//         const tasks = taskIds.map((id) => {
+//             return get(taskState(id))
+//         })
+//         return tasks.filter((task) => task.complete).length
+//     },
+// })
 
-const tasksRemainingState = selector({
-    key: 'tasksRemaining',
-    get: ({get}) => {
-        const taskIds = get(tasksState)
-        const tasks = taskIds.map((id) => {
+// const tasksRemainingState = selector({
+//     key: 'tasksRemaining',
+//     get:  const taskIds = get(tasksState)
+//         const tasks = taskIds.map((id) => {
+//             return get(taskState(id))
+//         })
+//         return tasks.filter((task) => !task.complete).length {
+//         const taskIds = get(tasksState)
+//         const tasks = taskIds.map((id) => {
+//             return get(taskState(id))
+//         })
+//         return tasks.filter((task) => !task.complete).length
+//     }
+
+const tasksCompleteState = atom(
+    get => {
+        const tasksState = get(tasksAtom)
+        const tasks = tasksState.map((val, id) => {
             return get(taskState(id))
         })
-        return tasks.filter((task) => !task.complete).length
+        return tasks.filter((task: Task) => task.complete).length
     },
-})
+
+)
+const tasksRemainingState = atom(
+    get => {
+        const tasksState = get(tasksAtom)
+        const tasks = tasksState.map((val, id) => {
+            return get(taskState(id))
+        })
+        return tasks.filter((task: Task) => !task.complete).length
+    }
+  )
 
 export const Stats: React.FC = () => {
-    const tasksComplete = useRecoilValue(tasksCompleteState)
-    const tasksRemaining = useRecoilValue(tasksRemainingState)
+    //const tasksComplete = useRecoilValue(tasksCompleteState)
+    //const tasksRemaining = useRecoilValue(tasksRemainingState)
+    const [tasksComplete] = useAtom(tasksCompleteState)
+    const [tasksRemaining] = useAtom(tasksRemainingState)
+
 
     return (
         <Container>
-            <Stat label="Tasks Complete" value={tasksComplete} />
+            <Stat label="Tasks Complete" value={tasksComplete.toString()} />
             <Divider />
-            <Stat label="Tasks Remaining" value={tasksRemaining} />
+            <Stat label="Tasks Remaining" value={tasksRemaining.toString()} />
         </Container>
     )
 }

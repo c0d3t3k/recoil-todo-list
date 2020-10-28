@@ -1,20 +1,33 @@
-import React from 'react'
-import {Task} from './Task'
-import {atom, useRecoilValue} from 'recoil'
+import * as _ from 'lodash';
 
-export const tasksState = atom<number[]>({
-    key: 'tasks',
-    default: [],
-})
+import React, { useMemo } from 'react'
+import {Task as TaskComponent} from './Task'
+//import {atom, useRecoilValue} from 'recoil'
+import { useAtom, atom } from 'jotai'
+
+// export const tasksState = atom<number[]>({
+//     key: 'tasks',
+//     default: [],
+// })
+
+// export const tasksState = atom([] as number[])
+
+export interface Task {
+    label: string,
+    complete: boolean
+}
+
+export const tasksAtom = atom<Task[]>([])
 
 export const Tasks: React.FC = () => {
-    const tasks = useRecoilValue(tasksState)
+    const [tasks] = useAtom(tasksAtom)
 
     return (
         <div>
-            {tasks.map((id) => (
-                <Task id={id} key={id} />
+            {/* <p>{JSON.stringify(tasks)}</p> */}
+            {tasks.map((task, id) => (
+                <TaskComponent id={id} key={id} />
             ))}
         </div>
-    )
+    );
 }

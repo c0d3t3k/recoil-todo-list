@@ -1,8 +1,13 @@
+import * as _ from 'lodash';
+
 import React from 'react'
 import styled, {css} from 'styled-components'
 import checkIconSvg from './check.svg'
 import {Card} from './Card'
-import {atomFamily, useRecoilState} from 'recoil'
+//import {atomFamily, useRecoilState} from 'recoil'
+import { useAtom, atom } from 'jotai'
+import { atomFamily } from 'jotai/utils'
+import { tasksAtom } from './Tasks'
 
 export const TextStyle = css`
     font-size: 17px;
@@ -65,16 +70,42 @@ const Strikethrough = styled.div<{checked: boolean}>`
         `};
 `
 
-export const taskState = atomFamily({
-    key: 'task',
-    default: {
-        label: '',
-        complete: false,
+
+
+// export const taskState = atomFamily({
+//     key: 'task',
+//     default: {
+//         label: '',
+//         complete: false,
+//     },
+// })
+
+// https://github.com/pmndrs/jotai/pull/45
+
+
+export const taskState = atomFamily(
+    (id: number) => (get) => {
+        const task = get(tasksAtom)[id]
+
+        return task;
     },
-})
+    (id: number) => (get, set, val) => {
+        const task = set(tasksAtom, (current: any) => {
+            current[id] = val;
+
+            return _.clone(current);
+        })
+
+        return task;
+    },
+)
+
+
+
 
 export const Task: React.FC<{id: number}> = ({id}) => {
-    const [{complete, label}, setTask] = useRecoilState(taskState(id))
+    //const [{complete, label}, setTask] = useRecoilState(taskState(id))
+    const [{complete, label}, setTask] = useAtom(taskState(id))
 
     return (
         <Container
