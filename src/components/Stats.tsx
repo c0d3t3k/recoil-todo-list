@@ -77,6 +77,7 @@ const Container = styled(Card)`
 //         return tasks.filter((task) => !task.complete).length
 //     }
 
+
 const tasksCompleteState = atom(
     get => {
         const tasksState = get(tasksAtom)

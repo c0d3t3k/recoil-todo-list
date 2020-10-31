@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import styled from 'styled-components'
 import {
     Container as TaskContainer,
@@ -9,7 +9,7 @@ import {
 //import {tasksState} from './Tasks'
 
 import { useAtom, atom } from 'jotai'
-import { atomFamily } from 'jotai/utils'
+import { atomFamily, useAtomCallback } from 'jotai/utils'
 import { tasksAtom } from './Tasks'
 
 const InsertInput = styled.input`
@@ -44,17 +44,16 @@ export const Input: React.FC = () => {
     //     }
     // })
 
-    const insertTask = (label: string) => {
-        // const newTaskId = tasks.length
-        setTasks([
-            ...tasks,
+    const insertTask = useAtomCallback(useCallback((get: any, set: any, label: string) => {
+        set(tasksAtom, [
+            ...get(tasksAtom),
             {
                 label,
                 complete: false
             }
         ])
-    }
-
+    }, []))
+    
     return (
         <TaskContainer>
             <InsertInput
