@@ -4,7 +4,7 @@ Sample todo list app to learn [Jotai](https://github.com/pmndrs/jotai) and compa
 
 This is an adapted [Recoil](https://recoiljs.org/) example originally written by  [Jacques Blom](https://github.com/jacques-blom)
 
-This app also utilizes the [Jotai DevTools] plugin. Be sure to install the [ReduxDevTools Browser Extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) to track Jotai state changes!
+This app also utilizes the [Jotai DevTools](https://github.com/c0d3t3k/jotai-devtools) plugin. Be sure to install the [ReduxDevTools Browser Extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) to track Jotai state changes!
 
 ![Sample GIF](https://github.com/c0d3t3k/jotai-devtools/raw/master/assets/JotaiTaskDevTools.gif)
 
