@@ -7,7 +7,7 @@ import {Card} from './Card'
 //import {atomFamily, useRecoilState} from 'recoil'
 import { useAtom, atom } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { tasksAtom } from './Tasks';
+import { tasksAtom, ITask } from './Tasks';
 
 export const TextStyle = css`
     font-size: 17px;
@@ -84,11 +84,13 @@ const Strikethrough = styled.div<{checked: boolean}>`
 
 
 export const taskState = atomFamily(
-    (id: number) => (get) => ({
-        label: '',
+    (task: ITask) => (get) => ({
+        label: task.label || '',
         complete: false,
     }),
-    null
+    null,
+    (a: any, b: any) => a.id === b.id
+    // (task: ITask) => (get, set, update) => update(task)
 )
 
 // export const taskState = atomFamily(
@@ -111,9 +113,9 @@ export const taskState = atomFamily(
 
 
 
-export const Task: React.FC<{id: number}> = ({id}) => {
+export const Task: React.FC<{id: number}> = ({ id }) => {
     //const [{complete, label}, setTask] = useRecoilState(taskState(id))
-    const [{complete, label}, setTask] = useAtom(taskState(id))
+    const [{complete, label}, setTask] = useAtom(taskState({ id }))
 
     return (
         <Container

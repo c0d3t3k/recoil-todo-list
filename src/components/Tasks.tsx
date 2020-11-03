@@ -12,12 +12,15 @@ import { useAtom, atom } from 'jotai'
 
 // export const tasksState = atom([] as number[])
 
-export interface Task {
+interface Task {
+    id: number
     label: string,
     complete: boolean
 }
 
-export const tasksAtom = atom<Task[]>([])
+export type ITask = Partial<Task>;
+
+export const tasksAtom = atom<number[]>([])
 
 export const Tasks: React.FC = () => {
     const [tasks] = useAtom(tasksAtom)
