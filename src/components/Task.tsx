@@ -7,7 +7,7 @@ import {Card} from './Card'
 //import {atomFamily, useRecoilState} from 'recoil'
 import { useAtom, atom } from 'jotai'
 import { atomFamily } from 'jotai/utils'
-import { tasksAtom } from './Tasks'
+import { tasksAtom } from './Tasks';
 
 export const TextStyle = css`
     font-size: 17px;
@@ -84,21 +84,29 @@ const Strikethrough = styled.div<{checked: boolean}>`
 
 
 export const taskState = atomFamily(
-    (id: number) => (get) => {
-        const task = get(tasksAtom)[id]
-
-        return task;
-    },
-    (id: number) => (get, set, val) => {
-        const task = set(tasksAtom, (current: any) => {
-            current[id] = val;
-
-            return _.clone(current);
-        })
-
-        return task;
-    },
+    (id: number) => (get) => ({
+        label: '',
+        complete: false,
+    }),
+    null
 )
+
+// export const taskState = atomFamily(
+//     (id: number) => (get) => {
+//         const task = get(tasksAtom)[id]
+
+//         return task;
+//     },
+//     (id: number) => (get, set, val) => {
+//         const task = set(tasksAtom, (current: any) => {
+//             current[id] = val;
+
+//             return _.clone(current);
+//         })
+
+//         return task;
+//     },
+// )
 
 
 
@@ -110,7 +118,7 @@ export const Task: React.FC<{id: number}> = ({id}) => {
     return (
         <Container
             onClick={() => {
-                setTask({
+                (setTask as any)({
                     label,
                     complete: !complete,
                 })

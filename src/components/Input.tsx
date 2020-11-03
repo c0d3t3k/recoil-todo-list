@@ -44,15 +44,24 @@ export const Input: React.FC = () => {
     //     }
     // })
 
+    // const insertTask = useAtomCallback(useCallback((get: any, set: any, label: string) => {
+    //     set(tasksAtom, [
+    //         ...get(tasksAtom),
+    //         {
+    //             label,
+    //             complete: false
+    //         }
+    //     ])
+    // }, []))
+
     const insertTask = useAtomCallback(useCallback((get: any, set: any, label: string) => {
-        set(tasksAtom, [
-            ...get(tasksAtom),
-            {
-                label,
-                complete: false
-            }
-        ])
-    }, []))
+        const newTaskId = tasks.length
+        set(tasksAtom, [...tasks, newTaskId])
+        set(taskState(newTaskId), {
+            label: label,
+            complete: false,
+        })
+    }, []));
     
     return (
         <TaskContainer>
