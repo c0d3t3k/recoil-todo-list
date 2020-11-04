@@ -85,7 +85,6 @@ const Strikethrough = styled.div<{checked: boolean}>`
 
 export const taskState = atomFamily(
     (task: ITask) => ({
-        id: task.id || 0,
         label: task.label || '',
         complete: false,
     }),
