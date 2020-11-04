@@ -84,12 +84,13 @@ const Strikethrough = styled.div<{checked: boolean}>`
 
 
 export const taskState = atomFamily(
-    (id: number) => ({
-        label: '',
-        complete: false,
-    } as ITask)
+  ({ id, label, complete }) => ({
+    label,
+    complete,
+  }),
+  null,
+  (a: ITask, b: ITask) => a.id === b.id
 )
-
 // export const taskState = atomFamily(
 //     (id: number) => (get) => {
 //         const task = get(tasksAtom)[id]
@@ -112,7 +113,7 @@ export const taskState = atomFamily(
 
 export const Task: React.FC<{id: number}> = ({ id }) => {
     //const [{complete, label}, setTask] = useRecoilState(taskState(id))
-    const [{complete, label}, setTask] = useAtom(taskState(id)) 
+    const [{complete, label}, setTask] = useAtom(taskState({ id })) 
 
     return (
         <Container
