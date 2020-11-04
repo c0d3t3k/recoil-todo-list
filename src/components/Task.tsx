@@ -84,13 +84,10 @@ const Strikethrough = styled.div<{checked: boolean}>`
 
 
 export const taskState = atomFamily(
-    (task: ITask) => ({
-        label: task.label || '',
+    (id: number) => ({
+        label: '',
         complete: false,
-    }),
-    null,
-    (a: ITask, b: ITask) => a.id === b.id
-    // (task: ITask) => (get, set, update) => update(task)
+    } as ITask)
 )
 
 // export const taskState = atomFamily(
@@ -115,7 +112,7 @@ export const taskState = atomFamily(
 
 export const Task: React.FC<{id: number}> = ({ id }) => {
     //const [{complete, label}, setTask] = useRecoilState(taskState(id))
-    const [{complete, label}, setTask] = useAtom(taskState({ id }))
+    const [{complete, label}, setTask] = useAtom(taskState(id)) 
 
     return (
         <Container
@@ -126,7 +123,7 @@ export const Task: React.FC<{id: number}> = ({ id }) => {
                 })
             }}
         >
-            <Check checked={complete}>
+            <Check checked={complete as boolean}>
                 <CheckIcon
                     src={checkIconSvg}
                     style={{opacity: complete ? 1 : 0}}
@@ -134,7 +131,7 @@ export const Task: React.FC<{id: number}> = ({ id }) => {
             </Check>
             <Label>
                 {label}
-                <Strikethrough checked={complete} />
+                <Strikethrough checked={complete as boolean} />
             </Label>
         </Container>
     )

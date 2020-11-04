@@ -82,7 +82,7 @@ const tasksCompleteState = atom(
     get => {
         const tasksState = get(tasksAtom)
         const tasks = tasksState.map((id) => {
-            return get(taskState({ id }))
+            return get(taskState(id)) as ITask;
         })
         return tasks.filter((task: ITask) => task.complete).length
     },
@@ -92,7 +92,7 @@ const tasksRemainingState = atom(
     get => {
         const tasksState = get(tasksAtom)
         const tasks = tasksState.map((id) => {
-            return get(taskState({ id }))
+            return get(taskState(id)) as ITask;
         })
         return tasks.filter((task: ITask) => !task.complete).length
     }
