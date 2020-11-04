@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, {css} from 'styled-components'
 import checkIconSvg from './check.svg'
 import {Card} from './Card'
@@ -113,7 +113,11 @@ export const taskState = atomFamily(
 
 export const Task: React.FC<{id: number}> = ({ id }) => {
     //const [{complete, label}, setTask] = useRecoilState(taskState(id))
-    const [{complete, label}, setTask] = useAtom(taskState({ id })) 
+    const [{complete, label, ...fullTask}, setTask] = useAtom(taskState({ id })) 
+
+    useEffect(() => {
+        console.log("Full Task", fullTask)
+    }, [fullTask])
 
     return (
         <Container

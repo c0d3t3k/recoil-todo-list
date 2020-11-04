@@ -59,6 +59,7 @@ export const Input: React.FC = () => {
     ) => {
         const newTaskId = tasks.length;
         setTasks([...tasks, newTaskId]);
+        console.log(label, tasks);
         taskState({
             id: newTaskId,
             label: label,
