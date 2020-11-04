@@ -13,7 +13,7 @@ import { useAtom, atom } from 'jotai'
 // export const tasksState = atom([] as number[])
 
 interface Task {
-    id: number
+    id: number 
     label: string,
     complete: boolean
 }

@@ -58,6 +58,7 @@ export const Input: React.FC = () => {
         const newTaskId = tasks.length
         set(tasksAtom, [...tasks, newTaskId])
         set(taskState({ id: newTaskId }), {
+            id: newTaskId,
             label: label,
             complete: false,
         })

@@ -84,12 +84,13 @@ const Strikethrough = styled.div<{checked: boolean}>`
 
 
 export const taskState = atomFamily(
-    (task: ITask) => (get) => ({
+    (task: ITask) => ({
+        id: task.id || 0,
         label: task.label || '',
         complete: false,
     }),
     null,
-    (a: any, b: any) => a.id === b.id
+    (a: ITask, b: ITask) => a.id === b.id
     // (task: ITask) => (get, set, update) => update(task)
 )
 
