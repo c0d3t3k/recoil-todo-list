@@ -55,7 +55,7 @@ export const Input: React.FC = () => {
     // }, []))
 
     const insertTask = useAtomCallback(useCallback((
-        get: any, set: any, label: string
+        get, set, label: string
     ) => {
         const newTaskId = tasks.length
         set(tasksAtom, [...tasks, newTaskId])
