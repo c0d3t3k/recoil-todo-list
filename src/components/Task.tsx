@@ -114,11 +114,7 @@ export const taskState = atomFamily(
 export const Task: React.FC<{id: number}> = ({ id }) => {
     //const [{complete, label}, setTask] = useRecoilState(taskState(id))
     const [{complete, label, ...fullTask}, setTask] = useAtom(taskState({ id })) 
-
-    useEffect(() => {
-        console.log("Full Task", fullTask)
-    }, [fullTask])
-
+    
     return (
         <Container
             onClick={() => {
