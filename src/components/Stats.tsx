@@ -81,7 +81,7 @@ const testCountAtom = (complete: boolean) => atom(
     get => {
         const taskAtoms = get(tasksAtom);
         const tasks = taskAtoms.map(get);
-        return tasks.filter(task => !!task.complete == complete).length
+        return tasks.filter(task => task.complete == complete).length
     },
 )
 
