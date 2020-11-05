@@ -12,12 +12,10 @@ import { useAtom, atom, PrimitiveAtom } from 'jotai'
 
 // export const tasksState = atom([] as number[])
 
-export interface Task {
+export interface ITask {
     label: string,
     complete: boolean
 }
-
-export type ITask = Partial<Task>;
 
 export const tasksAtom = atom<PrimitiveAtom<ITask>[]>([])
 
