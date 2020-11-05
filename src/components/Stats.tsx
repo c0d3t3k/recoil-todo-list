@@ -77,25 +77,16 @@ const Container = styled(Card)`
 //     }
 
 
-const tasksCompleteState = atom(
+const testCountAtom = (complete: boolean) => atom(
     get => {
-        const tasksState = get(tasksAtom)
-        const tasks = tasksState.map((taskAtom) => {
-            return get(taskAtom) as ITask;
-        })
-        return tasks.filter((task: ITask) => task.complete).length
+        const taskAtoms = get(tasksAtom);
+        const tasks = taskAtoms.map(get);
+        return tasks.filter(task => !!task.complete == complete).length
     },
-
 )
-const tasksRemainingState = atom(
-    get => {
-        const tasksState = get(tasksAtom)
-        const tasks = tasksState.map((taskAtom) => {
-            return get(taskAtom) as ITask;
-        })
-        return tasks.filter((task: ITask) => !task.complete).length
-    }
-  )
+
+const tasksRemainingState = testCountAtom(false);
+const tasksCompleteState = testCountAtom(true);
 
 export const Stats: React.FC = () => {
     //const tasksComplete = useRecoilValue(tasksCompleteState)
