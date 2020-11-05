@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import React, { useMemo } from 'react'
 import {Task as TaskComponent} from './Task'
 //import {atom, useRecoilValue} from 'recoil'
-import { useAtom, atom } from 'jotai'
+import { useAtom, atom, PrimitiveAtom } from 'jotai'
 
 // export const tasksState = atom<number[]>({
 //     key: 'tasks',
@@ -19,7 +19,7 @@ export interface Task {
 
 export type ITask = Partial<Task>;
 
-export const tasksAtom = atom<number[]>([])
+export const tasksAtom = atom<PrimitiveAtom<ITask>[]>([])
 
 export const Tasks: React.FC = () => {
     const [tasks] = useAtom(tasksAtom)
@@ -27,8 +27,8 @@ export const Tasks: React.FC = () => {
     return (
         <div>
             {/* <p>{JSON.stringify(tasks)}</p> */}
-            {tasks.map((task, id) => (
-                <TaskComponent id={id} key={id} />
+            {tasks.map((taskAtom) => (
+                <TaskComponent taskAtom={taskAtom} />
             ))}
         </div>
     );

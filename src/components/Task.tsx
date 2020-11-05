@@ -5,7 +5,7 @@ import styled, {css} from 'styled-components'
 import checkIconSvg from './check.svg'
 import {Card} from './Card'
 //import {atomFamily, useRecoilState} from 'recoil'
-import { useAtom, atom } from 'jotai'
+import { useAtom, atom, PrimitiveAtom } from 'jotai'
 import { atomFamily } from 'jotai/utils'
 import { tasksAtom, ITask } from './Tasks';
 
@@ -83,12 +83,12 @@ const Strikethrough = styled.div<{checked: boolean}>`
 // https://github.com/pmndrs/jotai/pull/45
 
 
-export const taskState = atomFamily(
-    (id: number) => ({
-        label: '',
-        complete: false,
-    } as ITask)
-)
+// export const taskState = atomFamily(
+//     (id: number) => ({
+//         label: '',
+//         complete: false,
+//     } as ITask)
+// )
 
 // export const taskState = atomFamily(
 //     (id: number) => (get) => {
@@ -110,9 +110,9 @@ export const taskState = atomFamily(
 
 
 
-export const Task: React.FC<{id: number}> = ({ id }) => {
+export const Task: React.FC<{ taskAtom: PrimitiveAtom<ITask> }> = ({ taskAtom }) => {
     //const [{complete, label}, setTask] = useRecoilState(taskState(id))
-    const [{complete, label}, setTask] = useAtom(taskState(id)) 
+    const [{complete, label}, setTask] = useAtom(taskAtom) 
 
     return (
         <Container

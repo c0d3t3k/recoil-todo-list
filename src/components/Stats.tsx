@@ -6,7 +6,6 @@ import styled from 'styled-components'
 //import {selector, useRecoilValue} from 'recoil'
 import { useAtom, atom } from 'jotai'
 import { ITask, tasksAtom } from './Tasks'
-import { taskState } from './Task'
 
 const StatContainer = styled.div`
     flex: 1;
@@ -81,8 +80,8 @@ const Container = styled(Card)`
 const tasksCompleteState = atom(
     get => {
         const tasksState = get(tasksAtom)
-        const tasks = tasksState.map((id) => {
-            return get(taskState(id)) as ITask;
+        const tasks = tasksState.map((taskAtom) => {
+            return get(taskAtom) as ITask;
         })
         return tasks.filter((task: ITask) => task.complete).length
     },
@@ -91,8 +90,8 @@ const tasksCompleteState = atom(
 const tasksRemainingState = atom(
     get => {
         const tasksState = get(tasksAtom)
-        const tasks = tasksState.map((id) => {
-            return get(taskState(id)) as ITask;
+        const tasks = tasksState.map((taskAtom) => {
+            return get(taskAtom) as ITask;
         })
         return tasks.filter((task: ITask) => !task.complete).length
     }

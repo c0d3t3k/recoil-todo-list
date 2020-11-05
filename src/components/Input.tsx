@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import {
     Container as TaskContainer,
     TextStyle as TaskTextStyle,
-    taskState,
 } from './Task'
 //import {useRecoilCallback, useRecoilValue} from 'recoil'
 //import {tasksState} from './Tasks'
 
 import { useAtom, atom } from 'jotai'
 import { atomFamily, useAtomCallback } from 'jotai/utils'
-import { tasksAtom } from './Tasks'
+import { tasksAtom, ITask } from './Tasks'
 
 const InsertInput = styled.input`
     width: 100%;
@@ -54,16 +53,9 @@ export const Input: React.FC = () => {
     //     ])
     // }, []))
 
-    const insertTask = useAtomCallback(useCallback((
-        get, set, label: string
-    ) => {
-        const newTaskId = tasks.length
-        set(tasksAtom, [...tasks, newTaskId])
-        set(taskState(newTaskId), {
-            label: label,
-            complete: false,
-        })
-    }, [tasks]));
+    const insertTask = (label: string) => {
+        setTasks([...tasks, atom({ label, complete: false } as ITask)]);
+    }
     
     return (
         <TaskContainer>
