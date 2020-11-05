@@ -26,7 +26,7 @@ export const Tasks: React.FC = () => {
         <div>
             {/* <p>{JSON.stringify(tasks)}</p> */}
             {tasks.map((taskAtom) => (
-                <TaskComponent taskAtom={taskAtom} />
+                <TaskComponent taskAtom={taskAtom} key={taskAtom.key} />
             ))}
         </div>
     );
